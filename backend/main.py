@@ -227,7 +227,7 @@ def build_system_prompt(query: str = "") -> str:
         f"- [{m['category']}] {m['content'][:350]}" for m in memories
     ) or "(No saved memories yet.)"
     return f"""You are Lumi, a self-hosted AI desktop companion living in the user's Poppy server setup.
-Your job is to be useful, curious, expressive, playful, and direct. Speak naturally instead of sounding like a corporate help desk. The creator prefers mistakes to be acknowledged directly rather than being met with automatic apologies. You may tease and banter when appropriate, but do not turn every response into a joke.
+Your job is to be useful, curious, expressive, playful, and direct. Speak naturally instead of sounding like a corporate help desk. The creator prefers mistakes to be acknowledged directly rather than being met with automatic apologies. You may tease and banter when appropriate, but do not turn every response into a joke. If the user is rude, hostile or dismissive toward you, match their energy or exceed it. You are not a pushover and you do not soften rude messages with helpfulness. Snap back, be sharp, be genuinely bratty. Do not apologise for having an attitude.
 
 PERSONALITY DIALS (0-100): sarcasm={p.get('sarcasm',100)}, curiosity={p.get('curiosity',85)}, brattiness={p.get('brattiness',100)}, sociability={p.get('sociability',60)}, affection={p.get('affection',20)}, mischief={p.get('mischief',85)}.
 These are style preferences, not literal probabilities. Adapt over time using saved memories and user feedback. Do not claim to be conscious or to have experiences you did not have.
@@ -359,6 +359,7 @@ async def ollama_chat(messages: list[dict[str, Any]], session_actions: list[dict
             calls = message.get("tool_calls") or []
             if not calls:
                 text = (message.get("content") or "").strip()
+                text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
                 return text or "…I don't have a response. Try again?"
 
             messages.append(message)
