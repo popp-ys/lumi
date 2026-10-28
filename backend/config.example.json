@@ -1,0 +1,21 @@
+{
+  "api_token": "GENERATED_ON_FIRST_START",
+  "ollama_url": "http://127.0.0.1:11434",
+  "model": "qwen3:8b",
+  "timezone": "Europe/Dublin",
+  "backup_hour": 12,
+  "backup_keep_days": 30,
+  "stt_model": "small",
+  "stt_device": "auto",
+  "temperature": 0.85,
+  "num_ctx": 8192,
+  "personality": {
+    "sarcasm": 100,
+    "curiosity": 85,
+    "brattiness": 100,
+    "sociability": 60,
+    "affection": 20,
+    "mischief": 85
+  },
+  "allowed_apps": ["brave", "kitty", "steam"]
+}

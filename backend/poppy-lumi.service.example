@@ -1,0 +1,19 @@
+# Copy to ~/.config/systemd/user/poppy-lumi.service and replace /ABSOLUTE/PATH/TO/Lumi_Poppy_Companion_v1/backend.
+[Unit]
+Description=Lumi Poppy AI companion backend
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/ABSOLUTE/PATH/TO/Lumi_Poppy_Companion_v1/backend
+ExecStart=/ABSOLUTE/PATH/TO/Lumi_Poppy_Companion_v1/backend/.venv/bin/uvicorn main:app --host 0.0.0.0 --port 8765
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+ProtectSystem=full
+ProtectHome=read-only
+ReadWritePaths=/ABSOLUTE/PATH/TO/Lumi_Poppy_Companion_v1/backend/data /ABSOLUTE/PATH/TO/Lumi_Poppy_Companion_v1/backend/config.json
+
+[Install]
+WantedBy=default.target
